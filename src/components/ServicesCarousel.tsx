@@ -42,16 +42,18 @@ const services = [
   },
 ];
 
+// Duplicate services for seamless infinite scroll
+const duplicatedServices = [...services, ...services, ...services];
+
 const ServicesCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateWidth = () => {
-      if (carouselRef.current) {
-        setWidth(carouselRef.current.offsetWidth);
+      if (containerRef.current) {
+        setWidth(containerRef.current.offsetWidth);
       }
     };
     updateWidth();
@@ -61,32 +63,7 @@ const ServicesCarousel = () => {
 
   const cardWidth = width < 768 ? width - 48 : width < 1024 ? (width - 72) / 2 : (width - 96) / 3;
   const gap = 24;
-  const cardsPerView = width < 768 ? 1 : width < 1024 ? 2 : 3;
-
-  // Auto-advance carousel
-  useEffect(() => {
-    if (isPaused || width === 0) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => {
-        const currentCardsPerView = width < 768 ? 1 : width < 1024 ? 2 : 3;
-        const calculatedMaxIndex = Math.max(0, services.length - currentCardsPerView);
-        
-        if (calculatedMaxIndex === 0) {
-          // If all cards fit on screen, just loop through all of them
-          return (prev + 1) % services.length;
-        }
-        
-        if (prev >= calculatedMaxIndex) {
-          return 0; // Loop back to start
-        }
-        return prev + 1;
-      });
-    }, 4000); // Change slide every 4 seconds
-
-    return () => clearInterval(interval);
-  }, [isPaused, width]);
-
+  const singleSetWidth = (cardWidth + gap) * services.length;
 
   return (
     <section id="services" className="py-24 bg-background relative overflow-hidden">
@@ -112,28 +89,35 @@ const ServicesCarousel = () => {
         </ScrollReveal>
 
         <div 
-          ref={carouselRef} 
+          ref={containerRef} 
           className="overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           <motion.div
             className="flex"
-            animate={{ x: -currentIndex * (cardWidth + gap) }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            style={{ gap }}
+            animate={isPaused ? {} : { x: [-singleSetWidth, 0] }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: width > 0 ? 40 : 0,
+                ease: "linear",
+              },
+            }}
+            style={{ gap, width: "fit-content" }}
           >
-            {services.map((service, index) => {
+            {duplicatedServices.map((service, index) => {
               const Icon = service.icon;
               return (
                 <motion.div
-                  key={service.title}
+                  key={`${service.title}-${index}`}
                   className="flex-shrink-0 group"
                   style={{ width: cardWidth }}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
+                  transition={{ delay: (index % services.length) * 0.1 }}
                 >
                   <div
                     className="relative h-[400px] sm:h-[450px] md:h-[500px] overflow-hidden bg-card border-2 border-border hover:border-primary transition-colors duration-300"
@@ -179,22 +163,6 @@ const ServicesCarousel = () => {
               );
             })}
           </motion.div>
-        </div>
-
-        {/* Progress dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {services.map((_, index) => {
-            // Calculate which dot should be active based on current view
-            const isActive = index >= currentIndex && index < currentIndex + cardsPerView;
-            return (
-              <div
-                key={index}
-                className={`h-2 transition-all duration-300 ${
-                  isActive ? "w-8 bg-primary" : "w-2 bg-border"
-                }`}
-              />
-            );
-          })}
         </div>
       </div>
     </section>

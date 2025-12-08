@@ -6,46 +6,52 @@ import ScrollReveal from "./ScrollReveal";
 const plans = [
   {
     name: "STARTER",
-    price: "29",
+    price: "49",
     period: "month",
     description: "Perfect for beginners ready to start their fitness journey",
     features: [
-      "Access to gym floor",
-      "Locker room access",
-      "2 group classes/month",
-      "Fitness assessment",
+      "Full gym floor access",
+      "Locker room & showers",
+      "2 group classes per month",
+      "Initial fitness assessment",
       "Mobile app access",
+      "Free Wi-Fi",
+      "Basic equipment orientation",
     ],
     popular: false,
   },
   {
     name: "WARRIOR",
-    price: "59",
+    price: "79",
     period: "month",
     description: "For dedicated athletes who want more from their training",
     features: [
-      "Full 24/7 gym access",
+      "24/7 gym access",
       "Unlimited group classes",
-      "1 PT session/month",
-      "Recovery zone access",
-      "Nutrition consultation",
-      "Priority booking",
+      "1 personal training session/month",
+      "Recovery zone access (sauna, steam)",
+      "Nutrition consultation (1/month)",
+      "Priority class booking",
+      "Advanced equipment access",
+      "Progress tracking tools",
     ],
     popular: true,
   },
   {
     name: "ELITE",
-    price: "99",
+    price: "129",
     period: "month",
     description: "The ultimate package for serious transformation",
     features: [
-      "All Warrior benefits",
-      "4 PT sessions/month",
-      "Custom meal plans",
-      "Body composition tracking",
-      "Guest passes (2/month)",
-      "Exclusive events access",
-      "VIP locker",
+      "All Warrior benefits included",
+      "4 personal training sessions/month",
+      "Custom meal plans & nutrition",
+      "Body composition analysis (monthly)",
+      "Guest passes (2 per month)",
+      "Exclusive member events",
+      "VIP locker with amenities",
+      "Priority trainer selection",
+      "Complimentary recovery services",
     ],
     popular: false,
   },
@@ -56,11 +62,13 @@ const plans = [
     description: "Tailored solutions for teams and businesses",
     features: [
       "Flexible membership tiers",
-      "Team challenges & events",
+      "Team fitness challenges & events",
       "On-site wellness programs",
       "Dedicated account manager",
-      "Monthly reporting",
-      "Volume discounts",
+      "Monthly usage reports",
+      "Volume pricing discounts",
+      "Custom billing options",
+      "Employee health assessments",
     ],
     popular: false,
   },
@@ -183,6 +191,18 @@ const PlansCarousel = () => {
                   </ul>
 
                   <button
+                    onClick={() => {
+                      if (plan.price === "Custom") {
+                        // Scroll to contact section
+                        const contactSection = document.getElementById("contact");
+                        if (contactSection) {
+                          contactSection.scrollIntoView({ behavior: "smooth" });
+                        }
+                      } else {
+                        // Handle membership signup - can be connected to a signup flow
+                        window.location.href = "#contact";
+                      }
+                    }}
                     className={`w-full py-3 sm:py-4 font-bebas text-base sm:text-lg tracking-wider transition-all duration-200 ${
                       plan.popular
                         ? "bg-foreground text-background hover:bg-foreground/90"
