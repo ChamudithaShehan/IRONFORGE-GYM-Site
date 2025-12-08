@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Instagram, Twitter, Facebook, Youtube } from "lucide-react";
+import { Instagram, Twitter, Facebook, Youtube, ChevronDown } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
   const footerLinks = [
     {
@@ -54,68 +56,97 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 lg:gap-12">
-          {/* Logo and description */}
-          <div className="sm:col-span-2 lg:col-span-2">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-16">
+        <div className="flex flex-col md:grid md:grid-cols-5 gap-6 sm:gap-8 md:gap-12">
+          {/* Logo and description - Always visible */}
+          <div className="md:col-span-2">
             <motion.a
               href="#home"
-              className="text-3xl sm:text-4xl md:text-5xl font-bebas text-foreground inline-block mb-4 sm:mb-6"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bebas text-foreground inline-block mb-3 sm:mb-4 md:mb-6"
               whileHover={{ scale: 1.02 }}
               data-cursor
             >
               <span>IRON</span>
               <span className="text-primary">FORGE</span>
             </motion.a>
-            <p className="text-muted-foreground font-oswald mb-4 sm:mb-6 max-w-sm text-sm sm:text-base">
+            <p className="text-muted-foreground font-oswald mb-4 sm:mb-5 md:mb-6 max-w-sm text-xs sm:text-sm md:text-base leading-relaxed">
               Where legends are forged. Join our community of warriors dedicated
               to pushing beyond limits and achieving the extraordinary.
             </p>
-            <div className="flex gap-3 sm:gap-4">
+            <div className="flex gap-2 sm:gap-3 md:gap-4">
               {socialLinks.map((social, index) => {
                 const Icon = social.icon;
                 return (
                   <motion.a
                     key={index}
                     href={social.href}
-                    className="w-9 h-9 sm:w-10 sm:h-10 bg-secondary border border-border flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-200"
+                    className="w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-secondary border border-border flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-200"
                     whileHover={{ y: -3 }}
                     data-cursor
+                    aria-label={`Follow us on ${social.icon.name}`}
                   >
-                    <Icon size={16} className="sm:w-[18px] sm:h-[18px]" />
+                    <Icon size={18} className="sm:w-5 sm:h-5" />
                   </motion.a>
                 );
               })}
             </div>
           </div>
 
-          {/* Links */}
-          {footerLinks.map((section) => (
-            <div key={section.title}>
-              <h4 className="font-bebas text-lg sm:text-xl text-foreground mb-4 sm:mb-6 relative inline-block">
-                {section.title}
-                <span className="absolute left-0 -bottom-1 w-6 sm:w-8 h-0.5 bg-primary" />
-              </h4>
-              <ul className="space-y-2 sm:space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-muted-foreground font-oswald text-xs sm:text-sm hover:text-primary transition-colors relative group"
-                      data-cursor
-                    >
-                      {link.name}
-                      <span className="absolute left-0 -bottom-0.5 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Links - Collapsible on mobile */}
+          {footerLinks.map((section) => {
+            const isOpen = openSections[section.title] ?? false;
+            const toggleSection = () => {
+              setOpenSections((prev) => ({
+                ...prev,
+                [section.title]: !prev[section.title],
+              }));
+            };
+
+            return (
+              <div key={section.title} className="border-b md:border-b-0 border-border pb-4 md:pb-0 last:border-b-0">
+                <button
+                  onClick={toggleSection}
+                  className="md:pointer-events-none w-full flex items-center justify-between md:justify-start mb-3 md:mb-4 lg:mb-6 md:cursor-default"
+                >
+                  <h4 className="font-bebas text-base sm:text-lg md:text-xl text-foreground relative inline-block">
+                    {section.title}
+                    <span className="absolute left-0 -bottom-1 w-6 sm:w-8 h-0.5 bg-primary hidden md:block" />
+                  </h4>
+                  <ChevronDown
+                    className={`w-5 h-5 md:hidden transition-transform duration-200 text-muted-foreground ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <motion.ul
+                  initial={false}
+                  animate={{
+                    height: isOpen ? "auto" : 0,
+                    opacity: isOpen ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-2 sm:space-y-2.5 md:space-y-3 overflow-hidden md:!h-auto md:!opacity-100"
+                >
+                  {section.links.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        className="text-muted-foreground font-oswald text-xs sm:text-sm hover:text-primary transition-colors relative group block py-1 md:py-0"
+                        data-cursor
+                      >
+                        {link.name}
+                        <span className="absolute left-0 -bottom-0.5 w-0 h-px bg-primary transition-all duration-300 group-hover:w-full" />
+                      </a>
+                    </li>
+                  ))}
+                </motion.ul>
+              </div>
+            );
+          })}
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-3 sm:gap-4 text-center sm:text-left">
+        <div className="mt-8 sm:mt-12 md:mt-16 pt-6 sm:pt-7 md:pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
           <p className="text-muted-foreground font-oswald text-xs sm:text-sm">
             © {currentYear} IRONFORGE GYM. All rights reserved.
           </p>

@@ -16,6 +16,7 @@ const Navbar = () => {
     { name: "PLANS", href: isHomePage ? "#plans" : "/#plans" },
     { name: "TRAINERS", href: isHomePage ? "#trainers" : "/#trainers" },
     { name: "GALLERY", href: "/gallery" },
+    { name: "REVIEWS", href: "/reviews" },
     { name: "CONTACT", href: isHomePage ? "#contact" : "/#contact" },
   ];
 

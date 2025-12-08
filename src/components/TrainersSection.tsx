@@ -1,5 +1,6 @@
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Instagram, Twitter } from "lucide-react";
+import { Instagram, Twitter, Star } from "lucide-react";
 import ScrollReveal from "./ScrollReveal";
 
 const trainers = [
@@ -37,7 +38,102 @@ const trainers = [
   },
 ];
 
+const reviews = [
+  {
+    id: 1,
+    name: "Marcus Steel",
+    rating: 5,
+    review: "The trainers at Iron Forge are world-class. Marcus helped me break through plateaus I've been stuck on for months.",
+    plan: "ELITE",
+  },
+  {
+    id: 2,
+    name: "Sarah Johnson",
+    rating: 5,
+    review: "Sarah's HIIT classes are intense and motivating. I've seen incredible results in just 3 months!",
+    plan: "WARRIOR",
+  },
+  {
+    id: 3,
+    name: "David Chen",
+    rating: 5,
+    review: "James is an amazing personal trainer. His expertise in bodybuilding has transformed my physique completely.",
+    plan: "ELITE",
+  },
+  {
+    id: 4,
+    name: "Emily Rodriguez",
+    rating: 5,
+    review: "Elena's yoga sessions are perfect for recovery. The flexibility and mindfulness training is exactly what I needed.",
+    plan: "WARRIOR",
+  },
+  {
+    id: 5,
+    name: "Michael Brown",
+    rating: 5,
+    review: "Best gym experience ever! The facilities are top-notch and the trainers are incredibly knowledgeable.",
+    plan: "ELITE",
+  },
+  {
+    id: 6,
+    name: "Amanda Lee",
+    rating: 5,
+    review: "I've tried many gyms, but Iron Forge is on another level. The community and support here is unmatched.",
+    plan: "WARRIOR",
+  },
+];
+
+// Duplicate reviews for seamless infinite scroll
+const duplicatedReviews = [...reviews, ...reviews, ...reviews];
+
+const StarRating = ({ rating }: { rating: number }) => {
+  return (
+    <div className="flex gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`w-3 h-3 sm:w-4 sm:h-4 ${
+            star <= rating ? "fill-primary text-primary" : "text-muted-foreground"
+          }`}
+        />
+      ))}
+    </div>
+  );
+};
+
 const TrainersSection = () => {
+  const containerRef1 = useRef<HTMLDivElement>(null);
+  const containerRef2 = useRef<HTMLDivElement>(null);
+  const [width1, setWidth1] = useState(0);
+  const [width2, setWidth2] = useState(0);
+  const [isPaused1, setIsPaused1] = useState(false);
+  const [isPaused2, setIsPaused2] = useState(false);
+
+  useEffect(() => {
+    const updateWidth1 = () => {
+      if (containerRef1.current) {
+        setWidth1(containerRef1.current.offsetWidth);
+      }
+    };
+    const updateWidth2 = () => {
+      if (containerRef2.current) {
+        setWidth2(containerRef2.current.offsetWidth);
+      }
+    };
+    updateWidth1();
+    updateWidth2();
+    window.addEventListener("resize", updateWidth1);
+    window.addEventListener("resize", updateWidth2);
+    return () => {
+      window.removeEventListener("resize", updateWidth1);
+      window.removeEventListener("resize", updateWidth2);
+    };
+  }, []);
+
+  const cardWidth = width1 < 768 ? width1 - 32 : (width1 - 48) / 2;
+  const gap = 24;
+  const singleSetWidth = (cardWidth + gap) * reviews.length;
+
   return (
     <section id="trainers" className="py-16 sm:py-20 md:py-24 bg-background relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -112,6 +208,129 @@ const TrainersSection = () => {
             </ScrollReveal>
           ))}
         </div>
+
+        {/* Reviews Section */}
+        <ScrollReveal delay={0.4}>
+          <div className="mt-16 sm:mt-20 md:mt-24">
+            <div className="text-center mb-8 sm:mb-12">
+              <span className="text-primary font-oswald text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4 block">
+                What members say
+              </span>
+              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bebas text-foreground">
+                MEMBER <span className="text-primary">REVIEWS</span>
+              </h3>
+            </div>
+
+            {/* Two Part Carousel */}
+            <div className="space-y-6 sm:space-y-8">
+              {/* First Carousel - Scrolls Left */}
+              <div
+                ref={containerRef1}
+                className="overflow-hidden"
+                onMouseEnter={() => setIsPaused1(true)}
+                onMouseLeave={() => setIsPaused1(false)}
+              >
+                <motion.div
+                  className="flex"
+                  animate={isPaused1 ? {} : { x: [-singleSetWidth, 0] }}
+                  transition={{
+                    x: {
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      duration: width1 > 0 ? 50 : 0,
+                      ease: "linear",
+                    },
+                  }}
+                  style={{ gap, width: "fit-content" }}
+                >
+                  {duplicatedReviews.map((review, index) => (
+                    <motion.div
+                      key={`left-${review.id}-${index}`}
+                      className="flex-shrink-0"
+                      style={{ width: cardWidth }}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: (index % reviews.length) * 0.1 }}
+                    >
+                      <div className="bg-card border-2 border-border p-5 sm:p-6 md:p-8 hover:border-primary transition-colors duration-300 h-full">
+                        <div className="flex items-start justify-between mb-3 sm:mb-4">
+                          <div>
+                            <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                              <h4 className="font-bebas text-lg sm:text-xl text-foreground">
+                                {review.name}
+                              </h4>
+                              <span className="text-xs font-oswald text-primary bg-primary/10 px-2 py-0.5">
+                                {review.plan}
+                              </span>
+                            </div>
+                            <StarRating rating={review.rating} />
+                          </div>
+                        </div>
+                        <p className="text-xs sm:text-sm md:text-base font-oswald text-muted-foreground leading-relaxed">
+                          "{review.review}"
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Second Carousel - Scrolls Right */}
+              <div
+                ref={containerRef2}
+                className="overflow-hidden"
+                onMouseEnter={() => setIsPaused2(true)}
+                onMouseLeave={() => setIsPaused2(false)}
+              >
+                <motion.div
+                  className="flex"
+                  animate={isPaused2 ? {} : { x: [0, -singleSetWidth] }}
+                  transition={{
+                    x: {
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      duration: width2 > 0 ? 50 : 0,
+                      ease: "linear",
+                    },
+                  }}
+                  style={{ gap, width: "fit-content" }}
+                >
+                  {duplicatedReviews.map((review, index) => (
+                    <motion.div
+                      key={`right-${review.id}-${index}`}
+                      className="flex-shrink-0"
+                      style={{ width: cardWidth }}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: (index % reviews.length) * 0.1 }}
+                    >
+                      <div className="bg-card border-2 border-border p-5 sm:p-6 md:p-8 hover:border-primary transition-colors duration-300 h-full">
+                        <div className="flex items-start justify-between mb-3 sm:mb-4">
+                          <div>
+                            <div className="flex items-center gap-2 mb-1 sm:mb-2">
+                              <h4 className="font-bebas text-lg sm:text-xl text-foreground">
+                                {review.name}
+                              </h4>
+                              <span className="text-xs font-oswald text-primary bg-primary/10 px-2 py-0.5">
+                                {review.plan}
+                              </span>
+                            </div>
+                            <StarRating rating={review.rating} />
+                          </div>
+                        </div>
+                        <p className="text-xs sm:text-sm md:text-base font-oswald text-muted-foreground leading-relaxed">
+                          "{review.review}"
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
