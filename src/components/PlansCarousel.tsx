@@ -122,7 +122,7 @@ const PlansCarousel = () => {
 
         <div ref={carouselRef} className="overflow-hidden">
           <motion.div
-            className="flex"
+            className="flex items-stretch"
             animate={{ x: -currentIndex * (cardWidth + gap) }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             style={{ gap }}
@@ -130,7 +130,7 @@ const PlansCarousel = () => {
             {plans.map((plan, index) => (
               <motion.div
                 key={plan.name}
-                className="flex-shrink-0"
+                className="flex-shrink-0 flex"
                 style={{ width: cardWidth }}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -138,7 +138,7 @@ const PlansCarousel = () => {
                 transition={{ delay: index * 0.1 }}
               >
                 <div
-                  className={`relative h-full p-5 sm:p-6 md:p-8 border-2 transition-all duration-300 ${
+                  className={`relative flex flex-col w-full p-5 sm:p-6 md:p-8 border-2 transition-all duration-300 ${
                     plan.popular
                       ? "bg-primary text-primary-foreground border-primary brutal-shadow"
                       : "bg-secondary border-border hover:border-primary"
@@ -147,7 +147,7 @@ const PlansCarousel = () => {
                   data-cursor-text="SELECT"
                 >
                   {plan.popular && (
-                    <div className="absolute -top-3 sm:-top-4 left-1/2 -translate-x-1/2 px-3 sm:px-4 py-0.5 sm:py-1 bg-foreground text-background font-bebas text-xs sm:text-sm tracking-wider">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 bg-primary-foreground text-primary font-bebas text-xs sm:text-sm tracking-wider border-2 border-primary shadow-lg">
                       MOST POPULAR
                     </div>
                   )}
@@ -177,7 +177,7 @@ const PlansCarousel = () => {
                     )}
                   </div>
 
-                  <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
+                  <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8 flex-grow">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm font-oswald">
                         <Check
