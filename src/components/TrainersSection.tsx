@@ -43,7 +43,7 @@ const reviews = [
     id: 1,
     name: "Marcus Steel",
     rating: 5,
-    review: "The trainers at Iron Forge are world-class. Marcus helped me break through plateaus I've been stuck on for months.",
+    review: "The trainers at Fitness Cube are world-class. Marcus helped me break through plateaus I've been stuck on for months.",
     plan: "ELITE",
   },
   {
@@ -78,7 +78,7 @@ const reviews = [
     id: 6,
     name: "Amanda Lee",
     rating: 5,
-    review: "I've tried many gyms, but Iron Forge is on another level. The community and support here is unmatched.",
+    review: "I've tried many gyms, but Fitness Cube is on another level. The community and support here is unmatched.",
     plan: "WARRIOR",
   },
 ];
@@ -92,9 +92,8 @@ const StarRating = ({ rating }: { rating: number }) => {
       {[1, 2, 3, 4, 5].map((star) => (
         <Star
           key={star}
-          className={`w-3 h-3 sm:w-4 sm:h-4 ${
-            star <= rating ? "fill-primary text-primary" : "text-muted-foreground"
-          }`}
+          className={`w-3 h-3 sm:w-4 sm:h-4 ${star <= rating ? "fill-primary text-primary" : "text-muted-foreground"
+            }`}
         />
       ))}
     </div>

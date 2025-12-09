@@ -51,7 +51,7 @@ const Footer = () => {
       <div className="py-3 sm:py-4 bg-primary overflow-hidden">
         <div className="marquee whitespace-nowrap">
           <span className="inline-block text-primary-foreground font-bebas text-sm sm:text-base md:text-lg tracking-[0.2em] sm:tracking-[0.3em] mx-4 sm:mx-8">
-            JOIN THE FORGE • TRANSFORM YOUR LIFE • BUILD YOUR LEGACY • JOIN THE FORGE • TRANSFORM YOUR LIFE • BUILD YOUR LEGACY • JOIN THE FORGE • TRANSFORM YOUR LIFE • BUILD YOUR LEGACY •
+            JOIN THE CLUB • TRANSFORM YOUR LIFE • BUILD YOUR LEGACY • JOIN THE CLUB • TRANSFORM YOUR LIFE • BUILD YOUR LEGACY • JOIN THE CLUB • TRANSFORM YOUR LIFE • BUILD YOUR LEGACY •
           </span>
         </div>
       </div>
@@ -62,15 +62,18 @@ const Footer = () => {
           <div className="md:col-span-2">
             <motion.a
               href="#home"
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bebas text-foreground inline-block mb-3 sm:mb-4 md:mb-6"
+              className="inline-block mb-3 sm:mb-4 md:mb-6"
               whileHover={{ scale: 1.02 }}
               data-cursor
             >
-              <span>IRON</span>
-              <span className="text-primary">FORGE</span>
+              <img
+                src="/logo.png"
+                alt="Fitness Cube"
+                className="h-12 sm:h-14 md:h-16 lg:h-20 w-auto object-contain"
+              />
             </motion.a>
             <p className="text-muted-foreground font-oswald mb-4 sm:mb-5 md:mb-6 max-w-sm text-xs sm:text-sm md:text-base leading-relaxed">
-              Where legends are forged. Join our community of warriors dedicated
+              Where legends are made. Join our community of warriors dedicated
               to pushing beyond limits and achieving the extraordinary.
             </p>
             <div className="flex gap-2 sm:gap-3 md:gap-4">
@@ -113,9 +116,8 @@ const Footer = () => {
                     <span className="absolute left-0 -bottom-1 w-6 sm:w-8 h-0.5 bg-primary hidden md:block" />
                   </h4>
                   <ChevronDown
-                    className={`w-5 h-5 md:hidden transition-transform duration-200 text-muted-foreground ${
-                      isOpen ? "rotate-180" : ""
-                    }`}
+                    className={`w-5 h-5 md:hidden transition-transform duration-200 text-muted-foreground ${isOpen ? "rotate-180" : ""
+                      }`}
                   />
                 </button>
                 <motion.ul
@@ -148,7 +150,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-8 sm:mt-12 md:mt-16 pt-6 sm:pt-7 md:pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 sm:gap-3 md:gap-4 text-center sm:text-left">
           <p className="text-muted-foreground font-oswald text-xs sm:text-sm">
-            © {currentYear} IRONFORGE GYM. All rights reserved.
+            © {currentYear} FITNESS CUBE. All rights reserved.
           </p>
           <p className="text-muted-foreground font-oswald text-xs sm:text-sm">
             Forging legends since 2010

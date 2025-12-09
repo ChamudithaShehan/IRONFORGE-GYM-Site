@@ -28,7 +28,7 @@ const Profile = () => {
   ];
 
   const achievements = [
-    { icon: "🏆", title: "Iron Champion", description: "Completed 100 workouts", unlocked: true },
+    { icon: "🏆", title: "Fitness Champion", description: "Completed 100 workouts", unlocked: true },
     { icon: "💪", title: "Strength Master", description: "Hit 10 PRs in deadlift", unlocked: true },
     { icon: "🔥", title: "Unstoppable", description: "30-day workout streak", unlocked: true },
     { icon: "⚡", title: "Speed Demon", description: "Complete HIIT in under 20min", unlocked: false },

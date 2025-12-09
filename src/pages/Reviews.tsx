@@ -23,7 +23,7 @@ const reviews: Review[] = [
     name: "Marcus Steel",
     rating: 5,
     date: "2 weeks ago",
-    review: "Iron Forge has completely transformed my fitness journey. The trainers are world-class, the equipment is top-notch, and the community is incredibly supportive. Best investment I've made!",
+    review: "Fitness Cube has completely transformed my fitness journey. The trainers are world-class, the equipment is top-notch, and the community is incredibly supportive. Best investment I've made!",
     plan: "ELITE",
     verified: true,
   },
@@ -41,7 +41,7 @@ const reviews: Review[] = [
     name: "David Chen",
     rating: 5,
     date: "3 weeks ago",
-    review: "I've been to many gyms, but Iron Forge stands out. The personal training sessions have helped me break through plateaus I've been stuck on for months.",
+    review: "I've been to many gyms, but Fitness Cube stands out. The personal training sessions have helped me break through plateaus I've been stuck on for months.",
     plan: "ELITE",
     verified: true,
   },
@@ -128,9 +128,8 @@ const Reviews = () => {
         {[1, 2, 3, 4, 5].map((star) => (
           <Star
             key={star}
-            className={`${size} ${
-              star <= rating ? "fill-primary text-primary" : "text-muted-foreground"
-            }`}
+            className={`${size} ${star <= rating ? "fill-primary text-primary" : "text-muted-foreground"
+              }`}
           />
         ))}
       </div>
@@ -165,7 +164,7 @@ const Reviews = () => {
                 WHAT OUR <span className="text-primary glitch">WARRIORS</span> SAY
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-oswald max-w-2xl mx-auto px-4 sm:px-0">
-                Real stories from real members who have transformed their lives at Iron Forge
+                Real stories from real members who have transformed their lives at Fitness Cube
               </p>
             </div>
           </ScrollReveal>
@@ -196,11 +195,10 @@ const Reviews = () => {
                       <button
                         key={rating}
                         onClick={() => setFilterRating(filterRating === rating ? null : rating)}
-                        className={`w-full flex items-center justify-between p-2 transition-colors ${
-                          filterRating === rating
+                        className={`w-full flex items-center justify-between p-2 transition-colors ${filterRating === rating
                             ? "bg-primary text-primary-foreground"
                             : "hover:bg-secondary"
-                        }`}
+                          }`}
                         data-cursor
                       >
                         <div className="flex items-center gap-2">
@@ -264,11 +262,10 @@ const Reviews = () => {
                               className="focus:outline-none"
                             >
                               <Star
-                                className={`w-6 h-6 sm:w-8 sm:h-8 ${
-                                  rating <= newReview.rating
+                                className={`w-6 h-6 sm:w-8 sm:h-8 ${rating <= newReview.rating
                                     ? "fill-primary text-primary"
                                     : "text-muted-foreground"
-                                } transition-colors`}
+                                  } transition-colors`}
                               />
                             </button>
                           ))}

@@ -41,7 +41,7 @@ const ContactSection = () => {
     {
       icon: MapPin,
       title: "Location",
-      content: "123 Forge Street, Iron District",
+      content: "123 Fitness Avenue, Health District",
       subContent: "New York, NY 10001",
     },
     {
@@ -53,8 +53,8 @@ const ContactSection = () => {
     {
       icon: Mail,
       title: "Email",
-      content: "info@ironforge.gym",
-      subContent: "support@ironforge.gym",
+      content: "info@fitnesscube.gym",
+      subContent: "support@fitnesscube.gym",
     },
     {
       icon: Clock,

@@ -88,21 +88,21 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const filteredImages = activeCategory === "All" 
-    ? galleryImages 
+  const filteredImages = activeCategory === "All"
+    ? galleryImages
     : galleryImages.filter(img => img.category === activeCategory);
 
   return (
     <div className="relative min-h-screen bg-background">
       <CustomCursor />
       <Navbar />
-      
+
       <main className="pt-24 sm:pt-28 md:pt-32 pb-12 sm:pb-16 md:pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           {/* Header */}
           <ScrollReveal>
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-6 sm:mb-8"
               data-cursor
             >
@@ -120,7 +120,7 @@ const Gallery = () => {
                 THE <span className="text-primary glitch">GALLERY</span>
               </h1>
               <p className="text-sm sm:text-base md:text-lg text-muted-foreground font-oswald max-w-2xl mx-auto mt-4 sm:mt-6 px-4 sm:px-0">
-                Step inside Iron Forge. Explore our world-class facilities, 
+                Step inside Fitness Cube. Explore our world-class facilities,
                 cutting-edge equipment, and the warriors who train here.
               </p>
             </div>
@@ -133,11 +133,10 @@ const Gallery = () => {
                 <motion.button
                   key={category}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 font-bebas text-sm sm:text-base md:text-lg tracking-wider transition-all duration-300 ${
-                    activeCategory === category
+                  className={`px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 font-bebas text-sm sm:text-base md:text-lg tracking-wider transition-all duration-300 ${activeCategory === category
                       ? "bg-primary text-primary-foreground brutal-shadow-sm"
                       : "border-2 border-muted text-muted-foreground hover:border-primary hover:text-primary"
-                  }`}
+                    }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   data-cursor
@@ -149,7 +148,7 @@ const Gallery = () => {
           </ScrollReveal>
 
           {/* Gallery Grid */}
-          <motion.div 
+          <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6"
             layout
           >
@@ -181,7 +180,7 @@ const Gallery = () => {
                       {image.title}
                     </h3>
                   </div>
-                  <motion.div 
+                  <motion.div
                     className="absolute inset-0 border-4 border-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   />
                 </motion.div>
@@ -209,7 +208,7 @@ const Gallery = () => {
             >
               <X size={28} className="sm:w-10 sm:h-10" />
             </motion.button>
-            
+
             <motion.div
               layoutId={`image-${selectedImage.id}`}
               className="relative max-w-5xl max-h-[85vh] sm:max-h-[80vh] overflow-hidden mx-4 sm:mx-0"

@@ -71,7 +71,7 @@ const HeroSection = () => {
           className="mb-4 sm:mb-6"
         >
           <span className="inline-block px-3 py-1.5 sm:px-4 sm:py-2 border border-primary text-primary font-oswald text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] uppercase">
-            Welcome to the forge
+            Welcome to the club
           </span>
         </motion.div>
 

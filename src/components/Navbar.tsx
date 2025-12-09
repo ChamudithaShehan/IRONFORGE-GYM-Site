@@ -52,19 +52,15 @@ const Navbar = () => {
           {/* Logo */}
           <motion.a
             href="#home"
-            className="text-2xl sm:text-3xl md:text-4xl font-bebas text-foreground relative group"
+            className="relative group"
             whileHover={{ scale: 1.05 }}
             data-cursor
             data-cursor-text="HOME"
           >
-            <span className="relative z-10">IRON</span>
-            <span className="text-primary">FORGE</span>
-            <motion.div
-              className="absolute -inset-2 bg-primary/10"
-              initial={{ scaleX: 0 }}
-              whileHover={{ scaleX: 1 }}
-              transition={{ duration: 0.3 }}
-              style={{ originX: 0 }}
+            <img
+              src="/logo.png"
+              alt="Fitness Cube"
+              className="h-14 sm:h-16 md:h-18 w-auto object-contain"
             />
           </motion.a>
 
@@ -74,7 +70,7 @@ const Navbar = () => {
               const isExternal = item.href.startsWith("#") || item.href.startsWith("/#");
               const NavComponent = isExternal ? "a" : Link;
               const navProps = isExternal ? { href: item.href } : { to: item.href };
-              
+
               return (
                 <motion.div
                   key={item.name}
@@ -93,7 +89,7 @@ const Navbar = () => {
                 </motion.div>
               );
             })}
-            
+
             {/* Profile Link */}
             <Link to="/profile" data-cursor data-cursor-text="PROFILE">
               <motion.div
@@ -104,7 +100,7 @@ const Navbar = () => {
                 <User size={20} />
               </motion.div>
             </Link>
-            
+
             <motion.button
               onClick={() => setShowSignIn(true)}
               className="px-4 sm:px-5 md:px-6 py-1.5 sm:py-2 bg-primary text-primary-foreground font-bebas text-base sm:text-lg tracking-wider brutal-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all duration-200"
@@ -157,7 +153,7 @@ const Navbar = () => {
               <div className="flex flex-col gap-6">
                 {navItems.map((item, i) => {
                   const isExternal = item.href.startsWith("#") || item.href.startsWith("/#");
-                  
+
                   if (isExternal) {
                     return (
                       <motion.a
@@ -175,7 +171,7 @@ const Navbar = () => {
                       </motion.a>
                     );
                   }
-                  
+
                   return (
                     <motion.div
                       key={item.name}
@@ -195,7 +191,7 @@ const Navbar = () => {
                     </motion.div>
                   );
                 })}
-                
+
                 {/* Mobile Profile Link */}
                 <motion.div
                   custom={navItems.length}
@@ -213,7 +209,7 @@ const Navbar = () => {
                     PROFILE
                   </Link>
                 </motion.div>
-                
+
                 <motion.button
                   custom={navItems.length + 1}
                   variants={itemVariants}

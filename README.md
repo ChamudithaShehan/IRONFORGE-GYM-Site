@@ -1,6 +1,6 @@
-# Iron Forge - Fitness & Gym Website
+# Fitness Club - Fitness & Gym Website
 
-A modern, responsive fitness and gym website built with React, TypeScript, and Tailwind CSS. Iron Forge features a sleek design with smooth animations, custom cursor interactions, and a fully responsive layout optimized for all devices.
+A modern, responsive fitness and gym website built with React, TypeScript, and Tailwind CSS. Fitness Club features a sleek design with smooth animations, custom cursor interactions, and a fully responsive layout optimized for all devices.
 
 ## 🚀 Features
 
@@ -192,7 +192,7 @@ This project is private and proprietary.
 
 ## 👤 Author
 
-Iron Forge Fitness
+Fitness Club
 
 ---
 
