@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GymLoader from "@/components/GymLoader";
 import Index from "./pages/Index";
 import Gallery from "./pages/Gallery";
+import Videos from "./pages/Videos";
 import Profile from "./pages/Profile";
 import Reviews from "./pages/Reviews";
 import NotFound from "./pages/NotFound";
@@ -38,6 +39,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/gallery" element={<Gallery />} />
+            <Route path="/videos" element={<Videos />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/reviews" element={<Reviews />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
